@@ -18,7 +18,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "myresourcegroup"{ 
-    name = "myfancyresourcegroup"
+    name = "rg-${var.application}"
     location = "westeurope"
 }
 
@@ -30,14 +30,14 @@ resource "azurerm_virtual_network" "myvirtualnetwork" {
 }
 
 resource "azurerm_subnet" "mysubnet" {
-    name = "mycutesubnet"
+    name = "subnet-${var.application}"
     address_prefixes = var.subnet
     virtual_network_name = azurerm_virtual_network.myvirtualnetwork.name
     resource_group_name = azurerm_resource_group.myresourcegroup.name
 }
 
 resource "azurerm_network_interface" "mynetworkinterface" {
-    name = "cutenic"
+    name = "nic-${var.application}"
     resource_group_name = azurerm_resource_group.myresourcegroup.name
     location = azurerm_resource_group.myresourcegroup.location
     ip_configuration {
@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "mynetworkinterface" {
 }
 
 resource "azurerm_windows_virtual_machine" "myvm" {
-  name                = "myvirtualmachine"
+  name                = "vm-${var.application}"
   resource_group_name = azurerm_resource_group.myresourcegroup.name
   location            = azurerm_resource_group.myresourcegroup.location
   size                = var.vm_size

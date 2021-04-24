@@ -20,11 +20,11 @@ variable "admin_password" {
 }
 
 variable "vnet" {
-    type = list
+    type = list(any)
 }
 
 variable "subnet" {
-    type = list
+    type = list(any)
 }
 
 variable "vm_size" {
