@@ -26,12 +26,12 @@ resource "azurerm_virtual_network" "myvirtualnetwork" {
     name = "myfancyvirtualnetwork"
     location = azurerm_resource_group.myresourcegroup.location
     resource_group_name = azurerm_resource_group.myresourcegroup.name
-    address_space = ["10.0.0.0/16"]
+    address_space = var.vnet
 }
 
 resource "azurerm_subnet" "mysubnet" {
     name = "mycutesubnet"
-    address_prefixes = [ "10.0.1.0/24" ]
+    address_prefixes = var.subnet
     virtual_network_name = azurerm_virtual_network.myvirtualnetwork.name
     resource_group_name = azurerm_resource_group.myresourcegroup.name
 }
@@ -52,9 +52,9 @@ resource "azurerm_windows_virtual_machine" "myvm" {
   name                = "myvirtualmachine"
   resource_group_name = azurerm_resource_group.myresourcegroup.name
   location            = azurerm_resource_group.myresourcegroup.location
-  size                = "Standard_B1s"
-  admin_username      = "adminuser"
-  admin_password      = "Pleasechangeme123!"
+  size                = var.vm_size
+  admin_username      = var.admin_password
+  admin_password      = var.admin_password
   computer_name = "hanswurstpc"
   network_interface_ids = [
     azurerm_network_interface.mynetworkinterface.id,
@@ -66,9 +66,9 @@ resource "azurerm_windows_virtual_machine" "myvm" {
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
-    version   = "latest"
+    publisher = var.os.publisher
+    offer     = var.os.offer
+    sku       = var.os.sku
+    version   = var.os.version
   }
 }
