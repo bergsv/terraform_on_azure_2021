@@ -16,6 +16,7 @@ variable "admin_username" {
 variable "admin_password" {
   type = string
   description = "Admin Password"
+  sensitive = true
 }
 
 variable "vnet" {
@@ -44,5 +45,6 @@ variable "storage_account_type" {
     type = map
     default = {
     westeurope = "Standard_LRS"
+    eastus = "Premium_LRS"
     }
 }

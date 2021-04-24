@@ -62,7 +62,7 @@ resource "azurerm_windows_virtual_machine" "myvm" {
 
   os_disk {
     caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    storage_account_type = lookup (var.storage_account_type, var.location)
   }
 
   source_image_reference {
